@@ -22,11 +22,7 @@ module.exports = {
 
     getListComic: async (req, res) => {
         try {
-            const chapter = await ChapterModel.findOne({ comicID: req.params.id });
-            const detail = chapter.detail;
-            const newestChapter = detail[detail.length - 1]
             const comics = await ComicModel.find();
-            
             res.send(comics);
         } catch (err) {
             res.status(httpStatus.BAD_REQUEST).send(err);
@@ -149,7 +145,6 @@ module.exports = {
             const comics = await ComicModel.find();
             const random = comics.sort(() => 0.5 - Math.random());
             const get12 = random.slice(0, 12);
-            console.log(get12.length);
             res.send(get12);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
@@ -160,8 +155,7 @@ module.exports = {
         try {
             const comics = await ComicModel.find();
             const random = comics.sort(() => 0.5 - Math.random());
-            const get12 = random.slice(0, 13);
-            console.log(get13.length);
+            const get13 = random.slice(0, 13);
             res.send(get13);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
