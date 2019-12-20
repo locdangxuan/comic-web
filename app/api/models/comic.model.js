@@ -46,7 +46,8 @@ const comicSchema = new mongoose.Schema({
         default: false
     },
     newestChapter: {
-        type: Number
+        type: Number,
+        default: 0
     }
 })
 
