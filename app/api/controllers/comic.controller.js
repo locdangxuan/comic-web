@@ -175,6 +175,7 @@ module.exports = {
                 let newestChapter = detail[detail.length - 1];
                 let comic = await ComicModel.findOne({_id: chapter.comicID});
                 comic.newestChapter = newestChapter.chapterNumber;
+                await comic.save();
                 comics.push(comic);
             }
             console.log(comics.length);
