@@ -1,4 +1,5 @@
 const ComicModel = require('../models/comic.model');
+const ChapterModel = require('../models/chapter.model');
 const UserModel = require('../models/user.model');
 const httpStatus = require('http-status');
 
@@ -21,7 +22,11 @@ module.exports = {
 
     getListComic: async (req, res) => {
         try {
+            const chapter = await ChapterModel.findOne({ comicID: req.params.id });
+            const detail = chapter.detail;
+            const newestChapter = detail[detail.length - 1]
             const comics = await ComicModel.find();
+            
             res.send(comics);
         } catch (err) {
             res.status(httpStatus.BAD_REQUEST).send(err);
@@ -111,7 +116,6 @@ module.exports = {
         }
     },
 
-
     getComment: async (req, res) => {
         try {
             const users = await UserModel.find();
@@ -126,13 +130,13 @@ module.exports = {
             //     avatarUser.push(user);
             //     console.log(avatarUser);
             // });
-            for (int comment = 0; comment < listComments.length; comment++) {
-                for(int user = 0; user < users.length; user++){
-                    if(user._id === comment.postedBy){
-                        avatarUser.push()
-                    }
-                }
-            }
+            // for (int comment = 0; comment < listComments.length; comment++) {
+            //     for(int user = 0; user < users.length; user++){
+            //         if(user._id === comment.postedBy){
+            //             avatarUser.push()
+            //         }
+            //     }
+            // }
             res.send(listComments);
 
         } catch (err) {
