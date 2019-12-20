@@ -126,13 +126,13 @@ module.exports = {
             //     avatarUser.push(user);
             //     console.log(avatarUser);
             // });
-            // for (int comment = 0; comment < listComments.length; comment++) {
-            //     for(int user = 0; user < users.length; user++){
-            //         if(user._id === comment.postedBy){
-            //             avatarUser.push
-            //         }
-            //     }
-            // }
+            for (int comment = 0; comment < listComments.length; comment++) {
+                for(int user = 0; user < users.length; user++){
+                    if(user._id === comment.postedBy){
+                        avatarUser.push()
+                    }
+                }
+            }
             res.send(listComments);
 
         } catch (err) {
@@ -140,13 +140,25 @@ module.exports = {
         }
     },
 
-    randomComicFromList: async (req, res) => {
+    random12ComicFromList: async (req, res) => {
         try {
             const comics = await ComicModel.find();
             const random = comics.sort(() => 0.5 - Math.random());
             const get12 = random.slice(0, 12);
             console.log(get12.length);
             res.send(get12);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    random13ComicFromList: async (req, res) => {
+        try {
+            const comics = await ComicModel.find();
+            const random = comics.sort(() => 0.5 - Math.random());
+            const get12 = random.slice(0, 13);
+            console.log(get13.length);
+            res.send(get13);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }

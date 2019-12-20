@@ -1,4 +1,5 @@
 const ChapterModel = require('../models/chapter.model');
+const ComicModel = require('../models/comic.model');
 const httpStatus = require('http-status');
 
 module.exports = {
