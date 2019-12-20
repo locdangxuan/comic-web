@@ -126,8 +126,12 @@ module.exports = {
             //     avatarUser.push(user);
             //     console.log(avatarUser);
             // });
-            // for (int i = 0; i < listComments.length; i++) {
-            //     for(int k = 0; k < users.length; j++)
+            // for (int comment = 0; comment < listComments.length; comment++) {
+            //     for(int user = 0; user < users.length; user++){
+            //         if(user._id === comment.postedBy){
+            //             avatarUser.push
+            //         }
+            //     }
             // }
             res.send(listComments);
 
