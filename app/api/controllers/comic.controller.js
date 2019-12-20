@@ -114,26 +114,17 @@ module.exports = {
 
     getComment: async (req, res) => {
         try {
-            const users = await UserModel.find();
             const comicExist = await ComicModel.findOne({ _id: req.params.id });
             if (!comicExist)
                 return res.send("cannot find comic");
             const listComments = [];
-            const avatarUser = []
+            const getUser = []
             comicExist.comments.forEach(comment => listComments.push(comment));
-            // listComments.forEach(async comm => {
-            //     const user = await UserModel.findOne({_id: comm.postedBy});
-            //     avatarUser.push(user);
-            //     console.log(avatarUser);
-            // });
-            // for (int comment = 0; comment < listComments.length; comment++) {
-            //     for(int user = 0; user < users.length; user++){
-            //         if(user._id === comment.postedBy){
-            //             avatarUser.push()
-            //         }
-            //     }
-            // }
-            res.send(listComments);
+            for (var i = 0; i < listComments.length; i++) {
+                const user = await UserModel.findOne({ _id: listComments[i].postedBy });
+                getUser.push(user);
+            }
+            res.send(getUser);
 
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
@@ -170,6 +161,24 @@ module.exports = {
             });
             const get10 = rank.slice(0, 10);
             res.send(get10);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    setNewestChapter: async (req, res) => {
+        try {
+            let comics = [];
+            let chapters = await ChapterModel.find();
+            for(let chapter of chapters){
+                let detail = chapter.detail;
+                let newestChapter = detail[detail.length - 1];
+                let comic = await ComicModel.findOne({_id: chapter.comicID});
+                comic.newestChapter = newestChapter.chapterNumber;
+                comics.push(comic);
+            }
+            console.log(comics.length);
+            res.send(comics);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }

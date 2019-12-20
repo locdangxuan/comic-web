@@ -102,7 +102,7 @@ module.exports = {
         try {
             const chapter = await ChapterModel.findOne({ comicID: req.params.id });
             const detail = chapter.detail;
-            const newestChapter = detail[detail.length - 1]
+            const newestChapter = detail[detail.length - 1];
             res.send(newestChapter);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
