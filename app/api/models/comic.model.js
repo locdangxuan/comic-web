@@ -49,7 +49,7 @@ const comicSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    like: {
+    follow: {
         type: Number,
         default: 0
     },
