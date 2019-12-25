@@ -106,6 +106,6 @@ module.exports = {
             res.send(newestChapter);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
-        }   
+        }
     }
 }

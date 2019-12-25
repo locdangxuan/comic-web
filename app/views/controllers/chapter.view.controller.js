@@ -23,8 +23,10 @@ module.exports = {
                 let isEqual = req.params.chapterNumber.localeCompare(element.chapterNumber.toString());
                 if (!isEqual) {
                     let arrImg = element.image;
+                    let video = element.video;
                     res.render('comics/chapters/detail', {
-                        arrImg: arrImg
+                        arrImg: arrImg,
+                        video: video
                     });
                 }
             })
