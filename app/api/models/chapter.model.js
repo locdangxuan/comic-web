@@ -24,7 +24,19 @@ const chapterSchema = new mongoose.Schema({
             type: String,
             trim: true,
             default: null
-        }
+        },
+        comments: [{
+            postedBy: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            content: {
+                type: String,
+                required: true,
+                trim: true
+            }
+        }]
     }]
 })
 

@@ -87,7 +87,7 @@ module.exports = {
         }
     },
 
-    newComment: async (req, res) => {
+    newCommentComic: async (req, res) => {
         try {
             const comicExist = await ComicModel.findOne({ _id: req.params.id });
             if (!comicExist)
@@ -112,7 +112,7 @@ module.exports = {
         }
     },
 
-    getComment: async (req, res) => {
+    getCommentComic: async (req, res) => {
         try {
             const comicExist = await ComicModel.findOne({ _id: req.params.id });
             if (!comicExist)

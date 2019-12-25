@@ -27,9 +27,13 @@ router.get('/:id/list-chapter', chapterController.getListChapter);
 router.post('/:id/delete-chapter', chapterController.deleteChapter);
 router.get('/:id/newest-chapter', chapterController.newestChapter);
 
-// <------------comment in comic ----------------->
-router.post('/:id/new-comment', comicController.newComment);
-router.get('/:id/get-comment', comicController.getComment);
+// <------------comment in comic and chapter ----------------->
+router.post('/:id/new-comment', comicController.newCommentComic);
+router.get('/:id/get-comment', comicController.getCommentComic);
+router.post('/:id/:chapterNumber/new-comment', chapterController.newCommentChapter);
+router.get('/:id/:chapterNumber/get-comment', chapterController.getCommentChapter);
+
+
 
 module.exports = router;
 

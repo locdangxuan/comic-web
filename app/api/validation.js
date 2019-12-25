@@ -28,7 +28,6 @@ const updateInfoValidation = (data) => {
         firstName: Joi.string(),
         lastName: Joi.string(),
         phoneNumber: Joi.string().min(8),
-        dateOfBirth: Joi.date().format('YYYY-MM-DD').utc()
     });
     return schema.validate(data);
 }

@@ -1,5 +1,6 @@
 const ChapterModel = require('../models/chapter.model');
 const ComicModel = require('../models/comic.model');
+const UserModel = require('../models/user.model');
 const httpStatus = require('http-status');
 
 module.exports = {
@@ -155,6 +156,74 @@ module.exports = {
             res.send(newestChapter);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    newCommentChapter: async (req, res) => {
+        try {
+            //<--------------checking comic is already exist---------------->
+            const chapterExist = await ChapterModel.findOne({ comicID: req.params.id });
+            if (!chapterExist)
+                return res.send("cannot find comic");
+            let checkUserId = false;
+            const users = await UserModel.find();
+            const userIds = [];
+            users.forEach(user => { if (user.token !== null) userIds.push(user._id) });
+            const newComment = {
+                chapterNumber: req.params.chapterNumber,
+                postedBy: req.body.postedBy,
+                content: req.body.content
+            };
+            userIds.forEach(userId => checkUserId = (!newComment.postedBy.localeCompare(userId)) ? true : false);
+
+            let checkChapterNumber = chapterExist.detail.find((chapter) => {
+                return  newComment.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString())  ? chapter : 0;
+            });
+            if (typeof checkChapterNumber === 'undefined')
+                return res.send("Chapter is not exist !");
+
+            if (checkUserId) {
+                checkChapterNumber.comments.push(newComment);
+                res.send(checkChapterNumber.comments);
+                await chapterExist.save();
+            } else res.send("You must login before comment")
+
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    getCommentChapter: async (req, res) => {
+        try {
+            const chapterExist = await ChapterModel.findOne({ comicID: req.params.id });
+            if (!chapterExist)
+                return res.send("cannot find comic");
+            console.log(typeof req.params.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString()));
+            let checkChapterNumber = chapterExist.detail.find((chapter) => {
+                // return  req.params.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString())  ? chapter : 0;
+                // return chapter.chapterNumber === 2;
+                return 
+            });
+
+            const listComments = [];
+            const getUserComment = []
+            checkChapterNumber.comments.forEach(comment => listComments.push(comment));
+            res.send(checkChapterNumber);
+
+            // for (let i = 0; i < listComments.length; i++) {
+            //     const user = await UserModel.findOne({ _id: listComments[i].postedBy });
+            //     let userComment = {
+            //         firstName: user.firstName,
+            //         lastName: user.lastName,
+            //         avatar: user.avatar,
+            //         comment: listComments[i].content
+            //     }
+            //     getUserComment.push(userComment);
+            // }
+            // res.send(getUserComment);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+
         }
     }
 }
