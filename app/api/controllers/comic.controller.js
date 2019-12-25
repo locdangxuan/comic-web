@@ -131,7 +131,7 @@ module.exports = {
         }
     },
 
-    random12ComicFromList: async (req, res) => {
+    random12ComicsFromList: async (req, res) => {
         try {
             const comics = await ComicModel.find();
             const random = comics.sort(() => 0.5 - Math.random());
@@ -142,7 +142,7 @@ module.exports = {
         }
     },
 
-    random13ComicFromList: async (req, res) => {
+    random13ComicsFromList: async (req, res) => {
         try {
             const comics = await ComicModel.find();
             const random = comics.sort(() => 0.5 - Math.random());
