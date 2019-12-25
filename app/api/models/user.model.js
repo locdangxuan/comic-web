@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: null
+        default: "https://cdn4.iconfinder.com/data/icons/seo-web-blue-1/100/seo__web_blue_1_22-512.png"
     },
     notification:[{
         type :String,

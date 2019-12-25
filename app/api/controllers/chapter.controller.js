@@ -198,29 +198,29 @@ module.exports = {
             const chapterExist = await ChapterModel.findOne({ comicID: req.params.id });
             if (!chapterExist)
                 return res.send("cannot find comic");
-            console.log(typeof req.params.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString()));
             let checkChapterNumber = chapterExist.detail.find((chapter) => {
                 // return  req.params.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString())  ? chapter : 0;
                 // return chapter.chapterNumber === 2;
-                return 
+               return !chapter.chapterNumber.toString().localeCompare(req.params.chapterNumber) ? chapter : 0 ;
             });
+
+            console.log(checkChapterNumber,checkChapterNumber);
 
             const listComments = [];
             const getUserComment = []
             checkChapterNumber.comments.forEach(comment => listComments.push(comment));
-            res.send(checkChapterNumber);
+            for (let i = 0; i < listComments.length; i++) {
+                const user = await UserModel.findOne({ _id: listComments[i].postedBy });
+                let userComment = {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    avatar: user.avatar,
+                    comment: listComments[i].content
+                }
+                getUserComment.push(userComment);
+            }
+            res.send(getUserComment);
 
-            // for (let i = 0; i < listComments.length; i++) {
-            //     const user = await UserModel.findOne({ _id: listComments[i].postedBy });
-            //     let userComment = {
-            //         firstName: user.firstName,
-            //         lastName: user.lastName,
-            //         avatar: user.avatar,
-            //         comment: listComments[i].content
-            //     }
-            //     getUserComment.push(userComment);
-            // }
-            // res.send(getUserComment);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
 
