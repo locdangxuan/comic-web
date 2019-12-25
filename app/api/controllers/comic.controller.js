@@ -118,13 +118,19 @@ module.exports = {
             if (!comicExist)
                 return res.send("cannot find comic");
             const listComments = [];
-            const getUser = []
+            const getUserComment = []
             comicExist.comments.forEach(comment => listComments.push(comment));
-            for (var i = 0; i < listComments.length; i++) {
+            for (let i = 0; i < listComments.length; i++) {
                 const user = await UserModel.findOne({ _id: listComments[i].postedBy });
-                getUser.push(user);
+                let userComment = {
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    avatar: user.avatar,
+                    comment: listComments[i].content
+                }
+                getUserComment.push(userComment);
             }
-            res.send(getUser);
+            res.send(getUserComment);
 
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
