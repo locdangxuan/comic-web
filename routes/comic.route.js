@@ -20,6 +20,8 @@ router.put('/:id/update-comic', comicController.update);
 //<----------------chapter in each comic----------------->
 router.post('/:id/create-list-chapter', chapterController.createListChapter);
 router.post('/:id/add-new-chapter', chapterController.addNewChapter);
+router.post('/:id/add-video-chapter', chapterController.addVideoChapter);
+router.post('/:id/update-video-chapter', chapterController.updateVideoChapter);
 router.put('/:id/update-chapter', chapterController.updateChapter);
 router.get('/:id/list-chapter', chapterController.getListChapter);
 router.post('/:id/delete-chapter', chapterController.deleteChapter);

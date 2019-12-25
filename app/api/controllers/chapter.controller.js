@@ -56,7 +56,56 @@ module.exports = {
             res.status(httpStatus.BAD_REQUEST).send(err);
         }
     },
+    addVideoChapter: async (req, res) => {
+        try {
+            //<--------------checking comic is already exist---------------->
+            const chapterExist = await ChapterModel.findOne({ comicID: req.params.id });
+            if (!chapterExist)
+                return res.send("cannot find comic");
 
+            const addVideo = {
+                chapterNumber: req.body.chapterNumber,
+                video: req.body.video
+            }
+
+            const checkChapterNumber = chapterExist.detail.find((chapter) => {
+                return chapter.chapterNumber === addVideo.chapterNumber ? chapter : 0;
+            });
+            if (typeof checkChapterNumber === 'undefined')
+                return res.send("Chapter is not exist !");
+            if (checkChapterNumber.video !== "")
+                return res.send("Chapter had video");
+            checkChapterNumber.video = addVideo.video;
+            await chapterExist.save();
+            res.send("Video Chapter successfully added !");
+        } catch (err) {
+            res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+    updateVideoChapter: async (req, res) => {
+        try {
+            //<--------------checking comic is already exist---------------->
+            const chapterExist = await ChapterModel.findOne({ comicID: req.params.id });
+            if (!chapterExist)
+                return res.send("cannot find comic");
+
+            const addVideo = {
+                chapterNumber: req.body.chapterNumber,
+                video: req.body.video
+            }
+
+            const checkChapterNumber = chapterExist.detail.find((chapter) => {
+                return chapter.chapterNumber === addVideo.chapterNumber ? chapter : 0;
+            });
+            if (typeof checkChapterNumber === 'undefined')
+                return res.send("Chapter is not exist !");
+            checkChapterNumber.video = addVideo.video;
+            await chapterExist.save();
+            res.send("Video Chapter successfully updated !");
+        } catch (err) {
+            res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
     updateChapter: async (req, res) => {
         try {
 

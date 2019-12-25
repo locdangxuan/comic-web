@@ -54,7 +54,11 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         default: null
-    }
+    },
+    notification:[{
+        type :String,
+        trim: true
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema, 'users');

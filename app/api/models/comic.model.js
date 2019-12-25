@@ -48,6 +48,14 @@ const comicSchema = new mongoose.Schema({
     newestChapter: {
         type: Number,
         default: 0
+    },
+    like: {
+        type: Number,
+        default: 0
+    },
+    timeUpLoadNewChapter: {
+        type: Date,
+        default: Date.now
     }
 })
 
