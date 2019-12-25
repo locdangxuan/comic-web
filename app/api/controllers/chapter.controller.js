@@ -199,12 +199,8 @@ module.exports = {
             if (!chapterExist)
                 return res.send("cannot find comic");
             let checkChapterNumber = chapterExist.detail.find((chapter) => {
-                // return  req.params.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString())  ? chapter : 0;
-                // return chapter.chapterNumber === 2;
                return !chapter.chapterNumber.toString().localeCompare(req.params.chapterNumber) ? chapter : 0 ;
             });
-
-            console.log(checkChapterNumber,checkChapterNumber);
 
             const listComments = [];
             const getUserComment = []
