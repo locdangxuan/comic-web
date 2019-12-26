@@ -177,7 +177,7 @@ module.exports = {
             userIds.forEach(userId => checkUserId = (!newComment.postedBy.localeCompare(userId)) ? true : false);
 
             let checkChapterNumber = chapterExist.detail.find((chapter) => {
-                return  newComment.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString())  ? chapter : 0;
+                return newComment.chapterNumber.localeCompare((chapter.chapterNumber - 1).toString()) ? chapter : 0;
             });
             if (typeof checkChapterNumber === 'undefined')
                 return res.send("Chapter is not exist !");
@@ -199,7 +199,7 @@ module.exports = {
             if (!chapterExist)
                 return res.send("cannot find comic");
             let checkChapterNumber = chapterExist.detail.find((chapter) => {
-               return !chapter.chapterNumber.toString().localeCompare(req.params.chapterNumber) ? chapter : 0 ;
+                return !chapter.chapterNumber.toString().localeCompare(req.params.chapterNumber) ? chapter : 0;
             });
 
             const listComments = [];
@@ -222,25 +222,26 @@ module.exports = {
 
         }
     },
-    getNewestChapter: async (req, res)=>{
+    getNewestChapter: async (req, res) => {
         try {
-            let details= [];
-            let comic= [];
+            let details = [];
+            let comic = [];
             let newestChapterUpload = [];
             let count = 0;
             const chapterExist = await ChapterModel.find();
-            chapterExist.forEach(chapter => details.push(chapter.detail));
-            details.forEach(time => comic.push(time[time.length-1].timeUpLoadChapter));
+            chapterExist.forEach(chapter => details.push({ value: chapter.detail, key: chapter.comicID }));
+            res.send(details[0].value[6]);
+            //details.forEach(time =>comic.push({key: time.key, value: time.value[] }));
             comic.sort((a, b) => {
                 return a < b ? 1 : -1;
             });
-            for(let i =0 ; i<comic.length-1;i++){
+            for (let i = 0; i < comic.length - 1; i++) {
                 count++;
                 newestChapterUpload.push(comic[i]);
-                if(count === 10) break;
+                if (count === 10) break;
             }
-            console.log(newestChapterUpload);
-            res.send(newestChapterUpload);
+            //console.log(newestChapterUpload);
+            //res.send(newestChapterUpload);
 
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);

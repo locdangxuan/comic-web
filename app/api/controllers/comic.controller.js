@@ -195,12 +195,12 @@ module.exports = {
             let comicsDone = [];
             const comics = await ComicModel.find();
             //console.log(comics[0].status);
-            comics.forEach(done => {if (done.status === true )comicsDone.push(done)});
+            comics.forEach(done => { if (done.status === true) comicsDone.push(done) });
             console.log(comicsDone.length);
             res.send(comicsDone);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
-          }
+        }
     },
 
     followComics: async (req, res) => {
@@ -219,18 +219,17 @@ module.exports = {
             if (checkUserId) {
                 let checkFollow = false;
                 comicExist.follows.forEach(follow => { if (!newFollow.followedBy.localeCompare(follow.followedBy)) return checkFollow = true });
-                if(!checkFollow){
+                if (!checkFollow) {
                     res.send(newFollow);
                     comicExist.follows.push(newFollow);
                     await comicExist.save();
-                }
-                else res.send("Comic is followed")
+                } else res.send("Comic is followed")
             } else res.send("You must login before follow comic")
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
     },
-    unFollowComics: async (req,  res) => {
+    unFollowComics: async (req, res) => {
         try {
             const comicExist = await ComicModel.findOne({ _id: req.params.id });
             if (!comicExist)
@@ -247,12 +246,11 @@ module.exports = {
                 let checkFollow = false;
                 comicExist.follows.forEach(follow => { if (!newFollow.followedBy.localeCompare(follow.followedBy)) return checkFollow = true });
                 let index = comicExist.follows.findIndex(check => (!newFollow.followedBy.localeCompare(check.followedBy)));
-                if(checkFollow){
+                if (checkFollow) {
                     res.send("Comic is unfollowed");
-                    comicExist.follows.splice(index,1);
+                    comicExist.follows.splice(index, 1);
                     await comicExist.save();
-                }
-                else res.send("Comic is not followed")
+                } else res.send("Comic is not followed")
             } else res.send("You must login before")
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);

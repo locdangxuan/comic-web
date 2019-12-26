@@ -39,4 +39,3 @@ router.get('/:id/:chapterNumber/get-comment', chapterController.getCommentChapte
 
 
 module.exports = router;
-

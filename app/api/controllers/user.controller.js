@@ -34,7 +34,7 @@ module.exports = {
                 lastName: req.body.lastName,
                 password: hashedPassword,
                 phoneNumber: req.body.phoneNumber,
-                dateOfBirth: req.body.date
+                gender: req.body.gender
             });
             //<-------------------save user to database------------------------->
             await user.save();
