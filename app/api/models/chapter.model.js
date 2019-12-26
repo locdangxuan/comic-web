@@ -36,7 +36,12 @@ const chapterSchema = new mongoose.Schema({
                 required: true,
                 trim: true
             }
-        }]
+        }],
+
+        timeUpLoadChapter: {
+            type: Date,
+            default: Date.now
+        }
     }]
 })
 

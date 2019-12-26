@@ -6,6 +6,7 @@ const chapterController = require('../app/api/controllers/chapter.controller');
 
 //<---------------get list comic------------------------->
 router.get('/set-newest-chapter', comicController.setNewestChapter);
+router.get('/get-newest-chapter', chapterController.getNewestChapter);
 router.get('/search-comic', comicController.searchComic);
 router.get('/list-comic', comicController.getListComic);
 router.get('/list-comic-done', comicController.getListComicDone);

@@ -221,5 +221,23 @@ module.exports = {
             return res.status(httpStatus.BAD_REQUEST).send(err);
 
         }
+    },
+    getNewestChapter: async (req, res)=>{
+        try {
+            let details= [];
+            let comic= [];
+            const chapterExist = await ChapterModel.find();
+            chapterExist.forEach(chapter => details.push(chapter.detail));
+            details.forEach(time => comic.push(time[time.length-1])
+                //console.log(getTime.timeUpLoadChapter);
+                
+            );
+            console.log(comic.length);
+            res.send("Confirm");
+
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+
+        }
     }
 }

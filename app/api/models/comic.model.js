@@ -59,11 +59,7 @@ const comicSchema = new mongoose.Schema({
             ref: 'User',
             required: true
         },
-    }],
-    timeUpLoadNewChapter: {
-        type: Date,
-        default: Date.now
-    }
+    }]
 })
 
 module.exports = mongoose.model('Comic', comicSchema, 'comics');
