@@ -141,7 +141,7 @@ module.exports = {
     delete: async (req, res) => {
         try {
             const deleteUser = await UserModel.findOneAndRemove({ username: req.body.username });
-            return (!deleteUser) ? res.send("cannot delete this user") : res.send("user successfully deleted!");
+            return (!deleteUser) ? res.send("user is not exist") : res.send("user successfully deleted!");
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }

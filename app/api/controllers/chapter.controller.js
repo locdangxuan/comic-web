@@ -6,10 +6,6 @@ const httpStatus = require('http-status');
 module.exports = {
     createListChapter: async (req, res) => {
         try {
-            // const comicExist = await ChapterModel.findOne({ comicID: req.params.id });
-            // if (comicExits)
-            //     return res.status(httpStatus.BAD_REQUEST).send('Comic already have chapters');
-
             const chapterNumberExist = await ChapterModel.findOne({ chapterNumber: req.body.detail[0].chapterNumber });
             if (chapterNumberExist)
                 return res.status(httpStatus.BAD_REQUEST).send("chapter already exist");
@@ -52,6 +48,18 @@ module.exports = {
                 return a.chapterNumber > b.chapterNumber ? 1 : -1;
             });
             await comicExist.save();
+
+            const comicIsExisted = await ComicModel.findOne({ _id: req.params.id });
+
+            const follows = comicIsExisted.follows;
+            for (let i = 0; i < follows.length; i++) {
+                const userExist = await UserModel.findOne({ _id: follows[i].followedBy })
+                userExist.notification.push(comicIsExisted.name + " have new chapter");
+                await userExist.save();
+                console.log(userExist.notification);
+            }
+
+
             res.send("Chapter successfully added !");
         } catch (err) {
             res.status(httpStatus.BAD_REQUEST).send(err);
