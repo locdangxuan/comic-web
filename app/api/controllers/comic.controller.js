@@ -189,5 +189,19 @@ module.exports = {
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
+    },
+    getListComicDone: async (req, res) => {
+        try {
+            let comicsDone = [];
+            const comics = await ComicModel.find();
+            //console.log(comics[0].status);
+            comics.forEach(done => {if (done.status === true )comicsDone.push(done)});
+            console.log(comicsDone.length);
+            res.send(comicsDone);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+          }
+
     }
+
 }

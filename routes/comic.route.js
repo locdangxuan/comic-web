@@ -8,6 +8,7 @@ const chapterController = require('../app/api/controllers/chapter.controller');
 router.get('/set-newest-chapter', comicController.setNewestChapter);
 router.get('/search-comic', comicController.searchComic);
 router.get('/list-comic', comicController.getListComic);
+router.get('/list-comic-done', comicController.getListComicDone);
 router.get('/random-12-comic', comicController.random12ComicsFromList);
 router.get('/random-13-comic', comicController.random13ComicsFromList);
 router.get('/rank-view-comic', comicController.rankViewComic);
