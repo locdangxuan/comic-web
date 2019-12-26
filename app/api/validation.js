@@ -9,6 +9,7 @@ const registerValidation = (data) => {
         lastName: Joi.string().required(),
         password: Joi.string().min(8).required(),
         phoneNumber: Joi.string().min(8).required(),
+        gender: Joi.boolean()
         //dateOfBirth: Joi.date().format('YYYY-MM-DD').utc().required()
     });
     return schema.validate(data);
@@ -28,7 +29,8 @@ const updateInfoValidation = (data) => {
         firstName: Joi.string(),
         lastName: Joi.string(),
         phoneNumber: Joi.string().min(8),
-        isAuthor: Joi.boolean()
+        isAuthor: Joi.boolean(),
+        gender: Joi.boolean()
     });
     return schema.validate(data);
 }
