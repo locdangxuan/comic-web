@@ -226,14 +226,21 @@ module.exports = {
         try {
             let details= [];
             let comic= [];
+            let newestChapterUpload = [];
+            let count = 0;
             const chapterExist = await ChapterModel.find();
             chapterExist.forEach(chapter => details.push(chapter.detail));
-            details.forEach(time => comic.push(time[time.length-1])
-                //console.log(getTime.timeUpLoadChapter);
-                
-            );
-            console.log(comic.length);
-            res.send("Confirm");
+            details.forEach(time => comic.push(time[time.length-1].timeUpLoadChapter));
+            comic.sort((a, b) => {
+                return a < b ? 1 : -1;
+            });
+            for(let i =0 ; i<comic.length-1;i++){
+                count++;
+                newestChapterUpload.push(comic[i]);
+                if(count === 10) break;
+            }
+            console.log(newestChapterUpload);
+            res.send(newestChapterUpload);
 
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
