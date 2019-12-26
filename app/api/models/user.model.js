@@ -35,9 +35,13 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    dateOfBirth: {
-        type: Date,
-        default: Date.now
+    // dateOfBirth: {
+    //     type: Date,
+    //     default: Date.now
+    // },
+    gender:{
+        type: Boolean,
+        required: true
     },
     token: {
         default: null,
@@ -51,9 +55,13 @@ const userSchema = new mongoose.Schema({
         default: false,
         type: Boolean
     },
+    isAuthor: {
+        default: false,
+        type: Boolean
+    },
     avatar: {
         type: String,
-        default: null
+        default: "https://cdn4.iconfinder.com/data/icons/seo-web-blue-1/100/seo__web_blue_1_22-512.png"
     },
     notification:[{
         type :String,

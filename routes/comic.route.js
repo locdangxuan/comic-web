@@ -16,6 +16,8 @@ router.post('/create-comic', comicController.create);
 router.delete('/delete-comic', comicController.delete);
 router.get('/:id', comicController.getComicById);
 router.put('/:id/update-comic', comicController.update);
+router.put('/:id/follow-comic', comicController.followComics);
+router.post('/:id/unfollow-comic', comicController.unFollowComics);
 
 //<----------------chapter in each comic----------------->
 router.post('/:id/create-list-chapter', chapterController.createListChapter);
@@ -30,6 +32,8 @@ router.get('/:id/newest-chapter', chapterController.newestChapter);
 // <------------comment in comic ----------------->
 router.post('/:id/new-comment', comicController.newComment);
 router.get('/:id/get-comment', comicController.getComment);
+router.post('/:id/:chapterNumber/new-comment', comicController.getComment);
+router.get('/:id/:chapterNumber/get-comment', comicController.getComment);
 
 module.exports = router;
 
