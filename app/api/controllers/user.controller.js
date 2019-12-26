@@ -140,8 +140,10 @@ module.exports = {
 
     delete: async (req, res) => {
         try {
+
             const deleteUser = await UserModel.findOneAndRemove({ username: req.body.username });
-            return (!deleteUser) ? res.send("user is not exist") : res.send("user successfully deleted!");
+            if(typeof req.body.username === "undefined") res.send("1");
+            else return (!deleteUser) ? res.send("user is not exist") : res.send("user successfully deleted!");
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
@@ -169,8 +171,8 @@ module.exports = {
             let users = await UserModel.find();
             let q = req.query.q;
             let userFilter = users.filter(user => {
-                return user.firstName.toLowerCase().indexOf(q.toLowerCase())  !== -1 ||
-                    user.lastName.toLowerCase().indexOf(q.toLowerCase())  !== -1 ;
+                return user.firstName.toLowerCase().indexOf(q.toLowerCase()) !== -1 ||
+                    user.lastName.toLowerCase().indexOf(q.toLowerCase()) !== -1;
             });
             res.send(userFilter);
         } catch (err) {
@@ -179,7 +181,7 @@ module.exports = {
     },
     setAdmin: async (req, res) => {
         try {
-            const user = await UserModel.findOne({username:req.body.username});
+            const user = await UserModel.findOne({ username: req.body.username });
             user.isAdmin = !user.isAdmin;
             await user.save();
             res.send('set Admin successfully!');
