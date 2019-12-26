@@ -176,10 +176,10 @@ module.exports = {
         try {
             let comics = [];
             let chapters = await ChapterModel.find();
-            for(let chapter of chapters){
+            for (let chapter of chapters) {
                 let detail = chapter.detail;
                 let newestChapter = detail[detail.length - 1];
-                let comic = await ComicModel.findOne({_id: chapter.comicID});
+                let comic = await ComicModel.findOne({ _id: chapter.comicID });
                 comic.newestChapter = newestChapter.chapterNumber;
                 await comic.save();
                 comics.push(comic);
@@ -201,7 +201,62 @@ module.exports = {
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
           }
+    },
 
+    followComics: async (req, res) => {
+        try {
+            const comicExist = await ComicModel.findOne({ _id: req.params.id });
+            if (!comicExist)
+                return res.send("cannot find comic");
+            let checkUserId = false;
+            const users = await UserModel.find();
+            const userIds = [];
+            users.forEach(user => { if (user.token !== null) userIds.push(user._id) });
+            const newFollow = {
+                followedBy: req.body.followedBy
+            }
+            userIds.forEach(userId => { if (!newFollow.followedBy.localeCompare(userId)) return checkUserId = true });
+            if (checkUserId) {
+                let checkFollow = false;
+                comicExist.follows.forEach(follow => { if (!newFollow.followedBy.localeCompare(follow.followedBy)) return checkFollow = true });
+                if(!checkFollow){
+                    res.send(newFollow);
+                    comicExist.follows.push(newFollow);
+                    await comicExist.save();
+                }
+                else res.send("Comic is followed")
+            } else res.send("You must login before follow comic")
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+    unFollowComics: async (req,  res) => {
+        try {
+            const comicExist = await ComicModel.findOne({ _id: req.params.id });
+            if (!comicExist)
+                return res.send("cannot find comic");
+            let checkUserId = false;
+            const users = await UserModel.find();
+            const userIds = [];
+            users.forEach(user => { if (user.token !== null) userIds.push(user._id) });
+            const newFollow = {
+                followedBy: req.body.followedBy
+            }
+            userIds.forEach(userId => { if (!newFollow.followedBy.localeCompare(userId)) return checkUserId = true });
+            if (checkUserId) {
+                let checkFollow = false;
+                comicExist.follows.forEach(follow => { if (!newFollow.followedBy.localeCompare(follow.followedBy)) return checkFollow = true });
+                let index = comicExist.follows.findIndex(check => (!newFollow.followedBy.localeCompare(check.followedBy)));
+                if(checkFollow){
+                    res.send("Comic is unfollowed");
+                    comicExist.follows.splice(index,1);
+                    await comicExist.save();
+                }
+                else res.send("Comic is not followed")
+            } else res.send("You must login before")
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
     }
 
 }

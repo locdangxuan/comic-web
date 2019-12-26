@@ -53,6 +53,13 @@ const comicSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    follows:[{
+        followedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+    }],
     timeUpLoadNewChapter: {
         type: Date,
         default: Date.now

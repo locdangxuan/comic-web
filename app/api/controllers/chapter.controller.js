@@ -65,7 +65,7 @@ module.exports = {
                 return res.send("cannot find comic");
 
             const addVideo = {
-                chapterNumber: req.body.chapterNumber,
+                chapterNumber: req.params.chapterNumber,
                 video: req.body.video
             }
 
